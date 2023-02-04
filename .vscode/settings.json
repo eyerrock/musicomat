@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.associations": {
+    "*.env": "env"
+  },
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.importModuleSpecifier": "relative"
+}
