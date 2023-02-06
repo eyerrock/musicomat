@@ -43,6 +43,7 @@
     "discord-player": "^5.4.0",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
+    "mongoose": "^6.9.0",
     "ora": "^6.1.2",
     "rimraf": "^4.1.2"
   }

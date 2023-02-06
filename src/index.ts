@@ -6,6 +6,7 @@ import { registerEvents } from "./events/registerEvents.js";
 import { registerPlayerEvents } from "./events/registerPlayerEvents.js";
 import { registerCommands } from "./registerCommands.js";
 import { Client } from "./types/Client.js";
+import { registerSignals } from "./registerSignals.js";
 
 const client = new Client({
   intents: [
@@ -15,6 +16,8 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
+
+registerSignals(client);
 
 await registerEvents(client);
 await registerPlayerEvents(client);
