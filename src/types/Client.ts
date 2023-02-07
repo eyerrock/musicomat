@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Player } from "discord-player";
 import { Client as ClientJS, ClientOptions, Collection } from "discord.js";
 import mongoose from "mongoose";
@@ -22,14 +23,16 @@ export class Client extends ClientJS {
   private initializeConfig = (): ClientConfiguration => {
     const spinner = ora("Loading configuration ...").start();
 
-    if (!process.env.CLIENT_TOKEN) {
-      spinner.fail("Missing CLIENT_TOKEN environment variable!");
-      process.exit(1);
-    } else if (!process.env.CLIENT_ID) {
-      spinner.fail("Missing CLIENT_ID environment variable!");
-      process.exit(1);
-    } else if (!process.env.MONGO_URI) {
-      spinner.fail("Missing MONGO_URI environment variable!");
+    const missingEnvVars = ["CLIENT_TOKEN", "CLIENT_ID", "MONGO_URI"].filter(
+      (envVar) => !process.env[envVar]
+    );
+
+    if (missingEnvVars.length > 0) {
+      spinner.fail(
+        `Failed to load configuration! Missing environment variables: ${chalk.cyan(
+          missingEnvVars.join(", ")
+        )}`
+      );
       process.exit(1);
     }
 
@@ -51,8 +54,8 @@ export class Client extends ClientJS {
         dbName: "musicomat",
       });
     } catch (err) {
-      spinner.fail("Failed to connect to MongoDB!");
-      throw err;
+      spinner.fail(`Failed to connect to MongoDB! Error:\n${err}`);
+      process.exit(1);
     }
 
     spinner.succeed("Successfully connected to MongoDB!");
@@ -63,7 +66,7 @@ export class Client extends ClientJS {
 
     try {
       await this.db.disconnect();
-      spinner.text = "Successfully disconnected from MongoDB!";
+      spinner.text = "Disconnected from MongoDB!";
     } catch (err) {
       spinner.fail("Failed to disconnect from MongoDB!");
       throw err;

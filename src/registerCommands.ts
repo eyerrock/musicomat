@@ -53,18 +53,13 @@ export const registerCommands = async (client: Client) => {
   }
 
   try {
-    const rest = new REST({ version: "10" }).setToken(
-      String(process.env.CLIENT_TOKEN)
-    );
+    const rest = new REST({ version: "10" }).setToken(client.config.token);
 
     spinner.text = `Starting registration of ${client.slashCommands.size} application (/) commands ...`;
 
-    const res = (await rest.put(
-      Routes.applicationCommands(String(process.env.CLIENT_ID)),
-      {
-        body: client.slashCommands.map((command) => command.data.toJSON()),
-      }
-    )) as APICommandRegistrationResponse[];
+    const res = (await rest.put(Routes.applicationCommands(client.config.id), {
+      body: client.slashCommands.map((command) => command.data.toJSON()),
+    })) as APICommandRegistrationResponse[];
 
     spinner.succeed(
       `Successfully registered ${res.length} application (/) commands!`
