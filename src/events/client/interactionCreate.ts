@@ -1,5 +1,6 @@
 import { Colors, Interaction } from "discord.js";
 
+import { GuildController } from "../../database/controllers/GuildController.js";
 import { Client } from "../../types/Client.js";
 import { CommandError } from "../../types/Command.js";
 import { ClientEvent } from "../../types/Event.js";
@@ -23,8 +24,13 @@ export default {
       return interaction.reply({ embeds: [embed] });
     }
 
+    if (!interaction.guild) return;
+    const guild = await GuildController.findOneOrCreateGuild(
+      interaction.guild.id
+    );
+
     try {
-      await command.execute(interaction, client);
+      await command.execute(interaction, guild, client);
     } catch (err) {
       console.error(err);
 

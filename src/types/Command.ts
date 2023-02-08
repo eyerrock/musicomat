@@ -4,6 +4,7 @@ import {
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
 
+import { IGuild } from "../database/interfaces/IGuild.js";
 import { Client } from "./Client.js";
 
 export type Command = {
@@ -11,6 +12,7 @@ export type Command = {
   aliases?: string[];
   execute: (
     interaction: ChatInputCommandInteraction,
+    guild: IGuild,
     client: Client
   ) => Promise<CommandError | void>;
 };
