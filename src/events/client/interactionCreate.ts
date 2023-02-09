@@ -17,7 +17,7 @@ export default {
       if (!command) {
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
-          .setTitle("Error")
+          .setTitle("❌ Error")
           .setDescription("Command not found!")
           .create();
 
@@ -39,14 +39,14 @@ export default {
         if (err instanceof CommandError)
           embed = new EmbedFactory()
             .setColor(Colors.Red)
-            .setTitle("Error")
+            .setTitle("❌ Error")
             .setDescription("An internal error occurred!")
             .addFields({ name: "Message", value: err.message })
             .create();
         else {
           embed = new EmbedFactory()
             .setColor(Colors.Red)
-            .setTitle("Error")
+            .setTitle("❌ Error")
             .setDescription("An internal error occurred!")
             .addFields({
               name: "Message",
@@ -60,7 +60,11 @@ export default {
             .create();
         }
 
-        await interaction.reply({ embeds: [embed] });
+        if (interaction.deferred || interaction.replied) {
+          await interaction.editReply({ embeds: [embed] });
+        } else {
+          await interaction.reply({ embeds: [embed] });
+        }
       }
     }
   },
