@@ -1,10 +1,11 @@
 import chalk from "chalk";
+import { Events } from "discord.js";
 
 import { Client } from "../../types/Client.js";
 import { ClientEvent } from "../../types/Event.js";
 
 export default {
-  name: "ready",
+  name: Events.ClientReady,
   once: true,
   execute: async (client: Client) => {
     if (!client.user || !client.application) {

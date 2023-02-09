@@ -1,9 +1,10 @@
 import { Player, PlayerEvents } from "discord-player";
+import { ClientEvents } from "discord.js";
 
 import { Client } from "./Client.js";
 
 export type ClientEvent = {
-  name: string;
+  name: keyof ClientEvents;
   once: boolean;
   execute: (client?: Client, ...args: unknown[]) => void;
 };
