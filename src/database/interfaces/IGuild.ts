@@ -3,4 +3,6 @@ export interface IGuild {
   volume: number;
   onEndDelay: number;
   onEmptyDelay: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
