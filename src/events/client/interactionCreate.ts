@@ -1,6 +1,7 @@
 import { Colors, Events, Interaction } from "discord.js";
 
 import { GuildController } from "../../database/controllers/GuildController.js";
+import { CommandGuard } from "../../guards/CommandGuard.js";
 import { Client } from "../../types/Client.js";
 import { CommandError } from "../../types/Command.js";
 import { ClientEvent } from "../../types/Event.js";
@@ -28,6 +29,7 @@ export default {
         interaction.guild.id
       );
 
+      if (!CommandGuard.checkInteraction(interaction)) return;
       try {
         await command.execute(interaction, guild, client);
       } catch (err) {

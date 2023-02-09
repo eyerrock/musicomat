@@ -1,6 +1,5 @@
 import { Colors, SlashCommandBuilder } from "discord.js";
 
-import { CommandGuard } from "../guards/CommandGuard.js";
 import { Command } from "../types/Command.js";
 import { EmbedFactory } from "../utils/EmbedFactory.js";
 
@@ -10,8 +9,6 @@ export default {
     .setDescription("Pong!")
     .setDMPermission(false),
   execute: async (interaction) => {
-    if (!CommandGuard.checkInteraction(interaction)) return;
-
     await interaction.deferReply();
 
     const latency = interaction.client.ws.ping;
