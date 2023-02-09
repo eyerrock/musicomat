@@ -1,6 +1,11 @@
 import chalk from "chalk";
 import { Player } from "discord-player";
-import { Client as ClientJS, ClientOptions, Collection } from "discord.js";
+import {
+  Client as ClientJS,
+  ClientOptions,
+  Collection,
+  RESTPostAPIChatInputApplicationCommandsJSONBody,
+} from "discord.js";
 import mongoose from "mongoose";
 import ora from "ora";
 
@@ -10,6 +15,10 @@ export class Client extends ClientJS {
   public config: ClientConfiguration;
   public player: Player;
   public slashCommands: Collection<string, Command>;
+  public slashCommandsData: Collection<
+    string,
+    RESTPostAPIChatInputApplicationCommandsJSONBody
+  >;
   public db: typeof mongoose;
 
   constructor(options: ClientOptions) {
@@ -17,6 +26,7 @@ export class Client extends ClientJS {
     this.config = this.initializeConfig();
     this.player = new Player(this);
     this.slashCommands = new Collection();
+    this.slashCommandsData = new Collection();
     this.db = mongoose;
   }
 

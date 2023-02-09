@@ -29,6 +29,7 @@ const loadCommands = async (client: Client, spinner: Ora) => {
     const { default: command }: { default: Command } = await import(filePath);
 
     client.slashCommands.set(command.data.name, command);
+    client.slashCommandsData.set(command.data.name, command.data.toJSON());
 
     if (command.aliases) {
       for (const alias of command.aliases) {
@@ -37,6 +38,10 @@ const loadCommands = async (client: Client, spinner: Ora) => {
         }
         aliases.push(alias);
         client.slashCommands.set(alias, command);
+        client.slashCommandsData.set(alias, {
+          ...command.data.toJSON(),
+          name: alias,
+        });
       }
     }
   }
@@ -58,7 +63,7 @@ export const registerCommands = async (client: Client) => {
     spinner.text = `Starting registration of ${client.slashCommands.size} application (/) commands ...`;
 
     const res = (await rest.put(Routes.applicationCommands(client.config.id), {
-      body: client.slashCommands.map((command) => command.data.toJSON()),
+      body: [...client.slashCommandsData.values()],
     })) as APICommandRegistrationResponse[];
 
     spinner.succeed(
