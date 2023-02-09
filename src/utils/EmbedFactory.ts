@@ -13,6 +13,7 @@ export class EmbedFactory {
   private fields: APIEmbedField[];
   private member: GuildMember | null;
   private footer: EmbedFooterOptions | null;
+  private thumbnail: string | null;
 
   constructor() {
     this.title = "";
@@ -21,6 +22,7 @@ export class EmbedFactory {
     this.fields = [];
     this.member = null;
     this.footer = null;
+    this.thumbnail = null;
   }
 
   public setTitle(title: string) {
@@ -55,10 +57,16 @@ export class EmbedFactory {
     return this;
   }
 
+  public setThumbnail(thumbnail: string) {
+    this.thumbnail = thumbnail;
+    return this;
+  }
+
   public create() {
     return new EmbedBuilder()
       .setColor(this.color)
       .setTitle(this.title)
+      .setThumbnail(this.thumbnail ?? null)
       .setDescription(this.description)
       .addFields(this.fields)
       .setTimestamp()
