@@ -14,6 +14,7 @@ export class EmbedFactory {
   private member: GuildMember | null;
   private footer: EmbedFooterOptions | null;
   private thumbnail: string | null;
+  private url: string | null;
 
   constructor() {
     this.title = "";
@@ -23,6 +24,7 @@ export class EmbedFactory {
     this.member = null;
     this.footer = null;
     this.thumbnail = null;
+    this.url = null;
   }
 
   public setTitle(title: string) {
@@ -62,10 +64,16 @@ export class EmbedFactory {
     return this;
   }
 
+  public setURL(url: string) {
+    this.url = url;
+    return this;
+  }
+
   public create() {
     return new EmbedBuilder()
       .setColor(this.color)
       .setTitle(this.title)
+      .setURL(this.url)
       .setThumbnail(this.thumbnail ?? null)
       .setDescription(this.description)
       .addFields(this.fields)
