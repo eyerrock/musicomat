@@ -21,6 +21,12 @@ import { validateURL } from "../utils/validateURL.js";
 import { Client } from "./Client.js";
 import { CommandError } from "./Command.js";
 
+export type Metadata = {
+  channel: TextBasedChannel;
+  guild: Guild;
+  member: GuildMember | (APIInteractionGuildMember & GuildMember);
+};
+
 export abstract class QueueController {
   public static getQueueByGuild = (
     interaction: GuardedChatInputCommandInteraction,
