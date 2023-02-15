@@ -43,7 +43,7 @@ export abstract class QueueController {
     if (!query) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("Error")
+        .setTitle("❌ | Error")
         .setDescription("You have to provide a search query!")
         .setMemberFooter(interaction.member)
         .create();
@@ -56,7 +56,7 @@ export abstract class QueueController {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Yellow)
-      .setTitle("🔍 Searching...")
+      .setTitle("🔍 | Searching ...")
       .setDescription(`Searching for ${query} ...`)
       .setMemberFooter(interaction.member)
       .create();
@@ -73,7 +73,7 @@ export abstract class QueueController {
     if (!searchResult || !searchResult.tracks.length) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("❌ Error")
+        .setTitle("❌ | Error")
         .setDescription("No results found!")
         .setMemberFooter(interaction.member)
         .create();
@@ -164,7 +164,7 @@ export abstract class QueueController {
     const embed = new EmbedFactory()
       .setColor(Colors.Green)
       .setTitle(
-        `🎶 Added ${searchResult.playlist ? "Playlist" : "Song"} ${
+        `🎶 | Added ${searchResult.playlist ? "Playlist" : "Song"} ${
           playOnTop ? "on top of" : "to"
         } the Queue`
       )

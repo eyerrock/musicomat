@@ -34,7 +34,7 @@ export default {
     const embed = new EmbedFactory()
       .setColor(Colors.Purple)
       .setThumbnail(track.thumbnail)
-      .setTitle("📀 Now Playing")
+      .setTitle("📀 | Now Playing")
       .setDescription(`**[${track.title}](${track.url})**`)
       .addFields(...fields)
       .setFooter({

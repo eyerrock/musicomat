@@ -17,7 +17,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Orange)
-      .setTitle("🏓 Pong!")
+      .setTitle("🏓 | Pong!")
       .setDescription(`Greetings, ${interaction.member}!`)
       .addFields({ name: "Latency", value: `${latency} ms` })
       .setMemberFooter(interaction.member)

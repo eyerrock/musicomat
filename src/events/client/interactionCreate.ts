@@ -17,7 +17,7 @@ export default {
       if (!command) {
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
-          .setTitle("❌ Error")
+          .setTitle("❌ | Error")
           .setDescription("Command not found!")
           .create();
 
@@ -39,14 +39,14 @@ export default {
         if (err instanceof CommandError)
           embed = new EmbedFactory()
             .setColor(Colors.Red)
-            .setTitle("❌ Error")
+            .setTitle("❌ | Error")
             .setDescription("An internal error occurred!")
             .addFields({ name: "Message", value: err.message })
             .create();
         else {
           embed = new EmbedFactory()
             .setColor(Colors.Red)
-            .setTitle("❌ Error")
+            .setTitle("❌ | Error")
             .setDescription("An internal error occurred!")
             .addFields({
               name: "Message",
