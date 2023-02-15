@@ -1,15 +1,16 @@
 import { Player, Queue } from "discord-player";
 import { Colors } from "discord.js";
 
+import { MetadataGuard } from "../../guards/MetadataGuard.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { Metadata } from "../../types/QueueController.js";
 import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "channelEmpty",
   once: false,
-  execute: async (player: Player, queue: Queue<Metadata>) => {
-    if (!queue.metadata) return console.log("Queue has no valid metadata!");
+  execute: async (player: Player, queue: Queue) => {
+    if (!MetadataGuard.guardMetadata(queue))
+      return console.log("Queue has no valid metadata!");
 
     const embed = new EmbedFactory()
       .setColor(Colors.Red)

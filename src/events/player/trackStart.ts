@@ -1,15 +1,16 @@
 import { Queue, QueueRepeatMode, Track } from "discord-player";
 import { Colors } from "discord.js";
 
+import { MetadataGuard } from "../../guards/MetadataGuard.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { Metadata } from "../../types/QueueController.js";
 import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "trackStart",
   once: false,
-  execute: async (player, queue: Queue<Metadata>, track: Track) => {
-    if (!queue.metadata) return console.log("Queue has no valid metadata!");
+  execute: async (player, queue: Queue, track: Track) => {
+    if (!MetadataGuard.guardMetadata(queue))
+      return console.log("Queue has no valid metadata!");
 
     const fields = [
       { name: "Title", value: track.title, inline: true },
