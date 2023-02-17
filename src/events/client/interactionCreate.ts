@@ -40,7 +40,7 @@ export default {
           embed = new EmbedFactory()
             .setColor(Colors.Red)
             .setTitle("❌ | Error")
-            .setDescription("An internal error occurred!")
+            .setDescription("An error occurred while executing the command!")
             .addFields({ name: "Message", value: err.message })
             .create();
         else {
