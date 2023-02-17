@@ -24,6 +24,7 @@ import { CommandError } from "./Command.js";
 export type Metadata = {
   channel: TextBasedChannel;
   guild: Guild;
+  guildData: IGuild;
   member: GuildMember | (APIInteractionGuildMember & GuildMember);
 };
 
@@ -95,6 +96,7 @@ export abstract class QueueController {
       throw new CommandError(
         "You have to be in a voice channel to use this command!"
       );
+
     const queue = client.player.createQueue(interaction.guild, {
       ytdlOptions: {
         filter: "audioonly",
@@ -105,11 +107,11 @@ export abstract class QueueController {
       leaveOnStop: false,
       leaveOnEmpty: true,
       leaveOnEmptyCooldown: guild.onEmptyDelay * 1000,
-      leaveOnEnd: true,
-      leaveOnEndCooldown: guild.onEndDelay * 1000,
+      leaveOnEnd: false,
       metadata: {
         channel: interaction.channel,
         guild: interaction.guild,
+        guildData: guild,
         member: interaction.member,
       },
       bufferingTimeout: 1000,

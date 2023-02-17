@@ -12,6 +12,7 @@ export abstract class MetadataGuard {
       typeof queue.metadata === "object" &&
       "channel" in queue.metadata &&
       "guild" in queue.metadata &&
+      "guildData" in queue.metadata &&
       "member" in queue.metadata
     );
   };
