@@ -22,6 +22,10 @@ export default {
       })
       .create();
 
-    await queue.metadata.channel.send({ embeds: [embed] });
+    try {
+      await queue.metadata.channel.send({ embeds: [embed] });
+    } catch (error) {
+      console.log("Seems like access to the channel was revoked: ", error);
+    }
   },
 } as PlayerEvent;
