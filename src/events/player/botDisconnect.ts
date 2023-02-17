@@ -14,7 +14,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Red)
-      .setTitle("🛑 | Disconnected!")
+      .setTitle("🛑 | Disconnected")
       .setDescription("I was disconnected from the voice channel.")
       .setFooter({
         text: "See you soon!",
