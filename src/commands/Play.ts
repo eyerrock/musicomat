@@ -1,7 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
+import { Colors, SlashCommandBuilder } from "discord.js";
 
 import { Command } from "../types/Command.js";
 import { QueueController } from "../types/QueueController.js";
+import { EmbedFactory } from "../utils/EmbedFactory.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -16,6 +17,17 @@ export default {
     ),
   aliases: ["p"],
   execute: async (interaction, guild, client) => {
+    if (!interaction.member.voice.channel) {
+      const embed = new EmbedFactory()
+        .setColor(Colors.Red)
+        .setTitle("❌ | Error")
+        .setDescription("You have to be in a voice channel!")
+        .setMemberFooter(interaction.member)
+        .create();
+
+      return interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+
     const searchResult = await QueueController.search(
       interaction,
       client,
