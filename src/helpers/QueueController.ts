@@ -15,11 +15,11 @@ import {
 
 import { IGuild } from "../database/interfaces/IGuild.js";
 import { GuardedChatInputCommandInteraction } from "../guards/CommandGuard.js";
-import { EmbedFactory } from "../utils/EmbedFactory.js";
+import { EmbedFactory } from "../helpers/EmbedFactory.js";
+import { Client } from "../types/Client.js";
+import { CommandError } from "../types/Command.js";
 import { msToHHMMSS } from "../utils/msToHHMMSS.js";
 import { validateURL } from "../utils/validateURL.js";
-import { Client } from "./Client.js";
-import { CommandError } from "./Command.js";
 
 export type Metadata = {
   channel: TextBasedChannel;
@@ -46,8 +46,7 @@ export abstract class QueueController {
         .setColor(Colors.Red)
         .setTitle("❌ | Error")
         .setDescription("You have to provide a search query!")
-        .setMemberFooter(interaction.member)
-        .create();
+        .setMemberFooter(interaction.member);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -59,8 +58,7 @@ export abstract class QueueController {
       .setColor(Colors.Yellow)
       .setTitle("🔍 | Searching ...")
       .setDescription(`Searching for ${query} ...`)
-      .setMemberFooter(interaction.member)
-      .create();
+      .setMemberFooter(interaction.member);
 
     await interaction.followUp({ embeds: [embed] });
 
@@ -76,8 +74,7 @@ export abstract class QueueController {
         .setColor(Colors.Red)
         .setTitle("❌ | Error")
         .setDescription("No results found!")
-        .setMemberFooter(interaction.member)
-        .create();
+        .setMemberFooter(interaction.member);
 
       await interaction.editReply({ embeds: [embed] });
       return;
@@ -190,8 +187,7 @@ export abstract class QueueController {
           inline: true,
         }
       )
-      .setMemberFooter(interaction.member)
-      .create();
+      .setMemberFooter(interaction.member);
 
     if (!queue.playing) await queue.play();
     queue.setVolume(guild.volume);

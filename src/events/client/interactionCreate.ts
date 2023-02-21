@@ -2,10 +2,10 @@ import { Colors, Events, Interaction } from "discord.js";
 
 import { GuildController } from "../../database/controllers/GuildController.js";
 import { CommandGuard } from "../../guards/CommandGuard.js";
+import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { Client } from "../../types/Client.js";
 import { CommandError } from "../../types/Command.js";
 import { ClientEvent } from "../../types/Event.js";
-import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: Events.InteractionCreate,
@@ -18,8 +18,7 @@ export default {
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
           .setTitle("❌ | Error")
-          .setDescription("Command not found!")
-          .create();
+          .setDescription("Command not found!");
 
         return interaction.reply({ embeds: [embed] });
       }
@@ -41,8 +40,7 @@ export default {
             .setColor(Colors.Red)
             .setTitle("❌ | Error")
             .setDescription("An error occurred while executing the command!")
-            .addFields({ name: "Message", value: err.message })
-            .create();
+            .addFields({ name: "Message", value: err.message });
         else {
           embed = new EmbedFactory()
             .setColor(Colors.Red)
@@ -56,8 +54,7 @@ export default {
             .setFooter({
               text: "Error",
               iconURL: client.user?.displayAvatarURL(),
-            })
-            .create();
+            });
         }
 
         if (interaction.deferred || interaction.replied) {

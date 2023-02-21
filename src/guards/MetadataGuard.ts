@@ -1,6 +1,6 @@
 import { Queue } from "discord-player";
 
-import { Metadata } from "../types/QueueController.js";
+import { Metadata } from "../helpers/QueueController.js";
 
 export abstract class MetadataGuard {
   public static guardMetadata = (

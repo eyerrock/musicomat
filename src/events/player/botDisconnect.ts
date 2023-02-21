@@ -2,8 +2,8 @@ import { Player, Queue } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
+import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "botDisconnect",
@@ -19,8 +19,7 @@ export default {
       .setFooter({
         text: "See you soon!",
         iconURL: player.client.user?.displayAvatarURL(),
-      })
-      .create();
+      });
 
     try {
       await queue.metadata.channel.send({ embeds: [embed] });

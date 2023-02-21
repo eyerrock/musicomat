@@ -2,8 +2,8 @@ import { Queue, QueueRepeatMode, Track } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
+import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "trackStart",
@@ -40,8 +40,7 @@ export default {
       .setFooter({
         text: "queued by " + queue.metadata.member.displayName,
         iconURL: queue.metadata.member.displayAvatarURL(),
-      })
-      .create();
+      });
 
     await queue.metadata.channel.send({ embeds: [embed] });
   },

@@ -2,8 +2,8 @@ import { Player, Queue } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
+import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "queueEnd",
@@ -23,8 +23,7 @@ export default {
       .setFooter({
         text: "waiting ...",
         iconURL: player.client.user?.displayAvatarURL(),
-      })
-      .create();
+      });
 
     const msg = await queue.metadata.channel.send({ embeds: [embed] });
 
@@ -36,8 +35,7 @@ export default {
         .setFooter({
           text: "Bye!",
           iconURL: player.client.user?.displayAvatarURL(),
-        })
-        .create();
+        });
 
       await msg.edit({ embeds: [embed] });
 

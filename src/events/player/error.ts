@@ -2,8 +2,8 @@ import { Queue } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
+import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
-import { EmbedFactory } from "../../utils/EmbedFactory.js";
 
 export default {
   name: "error",
@@ -17,8 +17,7 @@ export default {
       .setTitle("❌ | Error")
       .setDescription("An error occured on the player.")
       .addFields({ name: "Message", value: error.message })
-      .setMemberFooter(queue.metadata.member)
-      .create();
+      .setMemberFooter(queue.metadata.member);
 
     await queue.metadata.channel.send({ embeds: [embed] });
   },

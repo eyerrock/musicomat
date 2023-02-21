@@ -1,7 +1,7 @@
 import { Colors, SlashCommandBuilder } from "discord.js";
 
+import { EmbedFactory } from "../helpers/EmbedFactory.js";
 import { Command } from "../types/Command.js";
-import { EmbedFactory } from "../utils/EmbedFactory.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -20,8 +20,7 @@ export default {
       .setTitle("🏓 | Pong!")
       .setDescription(`Greetings, ${interaction.member}!`)
       .addFields({ name: "Latency", value: `${latency} ms` })
-      .setMemberFooter(interaction.member)
-      .create();
+      .setMemberFooter(interaction.member);
 
     await interaction.followUp({ embeds: [embed] });
   },

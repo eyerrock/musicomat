@@ -1,8 +1,8 @@
 import { Colors, SlashCommandBuilder } from "discord.js";
 
+import { EmbedFactory } from "../helpers/EmbedFactory.js";
+import { QueueController } from "../helpers/QueueController.js";
 import { Command } from "../types/Command.js";
-import { QueueController } from "../types/QueueController.js";
-import { EmbedFactory } from "../utils/EmbedFactory.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -22,8 +22,7 @@ export default {
         .setColor(Colors.Red)
         .setTitle("❌ | Error")
         .setDescription("You have to be in a voice channel!")
-        .setMemberFooter(interaction.member)
-        .create();
+        .setMemberFooter(interaction.member);
 
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
