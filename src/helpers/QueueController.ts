@@ -57,7 +57,7 @@ export abstract class QueueController {
     const embed = new EmbedFactory()
       .setColor(Colors.Yellow)
       .setTitle("🔍 | Searching ...")
-      .setDescription(`Searching for ${query} ...`)
+      .setDescription(`Searching for \`${query}\` ...`)
       .setMemberFooter(interaction.member);
 
     await interaction.followUp({ embeds: [embed] });
@@ -126,11 +126,7 @@ export abstract class QueueController {
   };
 
   static addToQueue = async (
-    queue: Queue<{
-      channel: TextBasedChannel;
-      guild: Guild;
-      member: GuildMember | (APIInteractionGuildMember & GuildMember);
-    }>,
+    queue: Queue,
     searchResult: PlayerSearchResult,
     playOnTop: boolean,
     interaction: GuardedChatInputCommandInteraction,
