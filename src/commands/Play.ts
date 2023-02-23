@@ -20,7 +20,7 @@ export default {
     if (!interaction.member.voice.channel) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("❌ | Error")
+        .setTitle("❌ ┃ **Error**")
         .setDescription("You have to be in a voice channel!")
         .setMemberFooter(interaction.member);
 

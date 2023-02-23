@@ -32,7 +32,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)
-      .setTitle("🎶 | Now Playing")
+      .setTitle("🎶 ┃ **Now Playing**")
       .setThumbnail(queue.current.thumbnail)
       .addFields(fields)
       .setMemberFooter(interaction.member);

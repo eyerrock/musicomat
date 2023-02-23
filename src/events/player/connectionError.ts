@@ -16,7 +16,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Red)
-      .setTitle("❌ | Connection Error")
+      .setTitle("❌ ┃ **Connection Error**")
       .setDescription(
         "An error occurred while connecting to the voice channel."
       )

@@ -21,7 +21,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)
-      .setTitle("🗑️ | Queue cleared")
+      .setTitle("🗑️ ┃ **Queue cleared**")
       .setDescription(`Cleared **${oldLength}** songs from the queue!`)
       .setMemberFooter(interaction.member);
 

@@ -25,7 +25,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)
-      .setTitle("📖 | Help Menu")
+      .setTitle("📖 ┃ **Help**")
       .setDescription(
         "This is a list of commands you can use in this server.\n" +
           "To use a command, type `/<command> <options>`\n" +

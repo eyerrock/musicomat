@@ -76,7 +76,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)
-      .setTitle("🎶 | Queue")
+      .setTitle("🎶 ┃ **Queue**")
       .setThumbnail(thumbnail)
       .setDescription(`Queue for **${interaction.guild.name}**`)
       .addFields(fields)

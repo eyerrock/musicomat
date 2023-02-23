@@ -21,7 +21,7 @@ export default {
       if (!command) {
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
-          .setTitle("❌ | Error")
+          .setTitle("❌ ┃ **Error**")
           .setDescription("Command not found!")
           .setFooter({
             text: "If this error persists, please contact the developer.",
@@ -44,7 +44,7 @@ export default {
 
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
-          .setTitle("❌ | Error");
+          .setTitle("❌ ┃ **Error**");
         if (err instanceof CommandError)
           embed
             .setDescription("An error occurred while executing the command!")

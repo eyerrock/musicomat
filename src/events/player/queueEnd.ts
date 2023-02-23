@@ -30,7 +30,7 @@ export default {
     setTimeout(async () => {
       embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("👋 | See you soon!")
+        .setTitle("👋 ┃ **See ya!**")
         .setDescription("Left the voice channel.")
         .setFooter({
           text: "Bye!",

@@ -14,7 +14,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Red)
-      .setTitle("❌ | Error")
+      .setTitle("❌ ┃ **Error**")
       .setDescription("An error occured on the player.")
       .addFields({ name: "Message", value: error.message })
       .setMemberFooter(queue.metadata.member);

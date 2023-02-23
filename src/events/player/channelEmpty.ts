@@ -14,7 +14,7 @@ export default {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Red)
-      .setTitle("👋 | See you soon!")
+      .setTitle("👋 ┃ **See ya!**")
       .setDescription(
         "No one is listening to music anymore, so I left the channel."
       )

@@ -38,7 +38,7 @@ export abstract class QueueController {
     if (!queue) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("❌ | No Queue")
+        .setTitle("❌ ┃ **Queue not found**")
         .setDescription("Could not find a queue!")
         .setMemberFooter(interaction.member);
 
@@ -57,7 +57,7 @@ export abstract class QueueController {
     if (!query) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("❌ | Error")
+        .setTitle("❌ ┃ **Error**")
         .setDescription("You have to provide a search query!")
         .setMemberFooter(interaction.member);
 
@@ -69,7 +69,7 @@ export abstract class QueueController {
 
     const embed = new EmbedFactory()
       .setColor(Colors.Yellow)
-      .setTitle("🔍 | Searching ...")
+      .setTitle("🔍 ┃ **Searching ...**")
       .setDescription(`Searching for \`${query}\` ...`)
       .setMemberFooter(interaction.member);
 
@@ -85,7 +85,7 @@ export abstract class QueueController {
     if (!searchResult || !searchResult.tracks.length) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
-        .setTitle("❌ | Error")
+        .setTitle("❌ ┃ **Error**")
         .setDescription("No results found!")
         .setMemberFooter(interaction.member);
 
@@ -172,14 +172,14 @@ export abstract class QueueController {
     const embed = new EmbedFactory()
       .setColor(Colors.Green)
       .setTitle(
-        `🎶 | Added ${searchResult.playlist ? "Playlist" : "Song"} ${
+        `🎶 ┃ ** Added ${searchResult.playlist ? "Playlist" : "Song"} ${
           playOnTop ? "on top of" : "to"
-        } the Queue`
+        } the Queue **`
       )
       .setThumbnail(toPlay.thumbnail)
       .setDescription(`**[${toPlay.title}](${toPlay.url})**`)
       .addFields(
-        { name: "Titel", value: toPlay.title, inline: true },
+        { name: "Title", value: toPlay.title, inline: true },
         {
           name: "Author",
           value:
