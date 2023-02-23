@@ -29,11 +29,24 @@ export type Metadata = {
 };
 
 export abstract class QueueController {
-  public static getQueueByGuild = (
-    interaction: GuardedChatInputCommandInteraction,
-    client: Client
+  public static getQueueByGuild = async (
+    client: Client,
+    interaction: GuardedChatInputCommandInteraction
   ) => {
-    return client.player.getQueue(interaction.guild);
+    const queue = client.player.getQueue(interaction.guild);
+
+    if (!queue) {
+      const embed = new EmbedFactory()
+        .setColor(Colors.Red)
+        .setTitle("❌ | No Queue")
+        .setDescription("Could not find a queue!")
+        .setMemberFooter(interaction.member);
+
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    return queue;
   };
 
   public static search = async (

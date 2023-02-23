@@ -1,6 +1,7 @@
 import { Colors, SlashCommandBuilder } from "discord.js";
 
 import { EmbedFactory } from "../helpers/EmbedFactory.js";
+import { QueueController } from "../helpers/QueueController.js";
 import { Command } from "../types/Command.js";
 
 export default {
@@ -11,18 +12,8 @@ export default {
   execute: async (interaction, guild, client) => {
     await interaction.deferReply();
 
-    const queue = client.player.getQueue(interaction.guild);
-
-    if (!queue) {
-      const embed = new EmbedFactory()
-        .setColor(Colors.Red)
-        .setTitle("❌ | No Queue")
-        .setDescription("There is no queue to clear!")
-        .setMemberFooter(interaction.member);
-
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
-      return;
-    }
+    const queue = await QueueController.getQueueByGuild(client, interaction);
+    if (!queue) return;
 
     const oldLength = queue.tracks.length;
 

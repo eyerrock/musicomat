@@ -34,6 +34,6 @@ export default {
       .setFields(fields)
       .setMemberFooter(interaction.member);
 
-    await interaction.followUp({ embeds: [embed] });
+    await interaction.followUp({ embeds: [embed], ephemeral: true });
   },
 } as Command;
