@@ -37,7 +37,6 @@ const loadCommands = async (client: Client, spinner: Ora) => {
           throw new Error(`Found duplicate alias: "${alias}" in "${file}"`);
         }
         aliases.push(alias);
-        client.slashCommands.set(alias, command);
         client.slashCommandsData.set(alias, {
           ...command.data.toJSON(),
           name: alias,
@@ -60,7 +59,7 @@ export const registerCommands = async (client: Client) => {
   try {
     const rest = new REST({ version: "10" }).setToken(client.config.token);
 
-    spinner.text = `Starting registration of ${client.slashCommands.size} application (/) commands ...`;
+    spinner.text = `Starting registration of ${client.slashCommandsData.size} application (/) commands ...`;
 
     const res = (await rest.put(Routes.applicationCommands(client.config.id), {
       body: [...client.slashCommandsData.values()],
