@@ -12,13 +12,21 @@ export default {
   once: false,
   execute: async (client: Client, interaction: Interaction) => {
     if (interaction.isChatInputCommand()) {
-      const command = client.slashCommands.get(interaction.commandName);
+      const command =
+        client.slashCommands.get(interaction.commandName) ||
+        client.slashCommands.find((command) =>
+          command.aliases?.includes(interaction.commandName)
+        );
 
       if (!command) {
         const embed = new EmbedFactory()
           .setColor(Colors.Red)
           .setTitle("❌ | Error")
-          .setDescription("Command not found!");
+          .setDescription("Command not found!")
+          .setFooter({
+            text: "If this error persists, please contact the developer.",
+            iconURL: client.user?.displayAvatarURL(),
+          });
 
         return interaction.reply({ embeds: [embed] });
       }
@@ -34,28 +42,23 @@ export default {
       } catch (err) {
         console.error(err);
 
-        let embed;
+        const embed = new EmbedFactory()
+          .setColor(Colors.Red)
+          .setTitle("❌ | Error");
         if (err instanceof CommandError)
-          embed = new EmbedFactory()
-            .setColor(Colors.Red)
-            .setTitle("❌ | Error")
+          embed
             .setDescription("An error occurred while executing the command!")
             .addFields({ name: "Message", value: err.message });
         else {
-          embed = new EmbedFactory()
-            .setColor(Colors.Red)
-            .setTitle("❌ | Error")
-            .setDescription("An internal error occurred!")
-            .addFields({
-              name: "Message",
-              value:
-                "Command execution failed! Error will be logged to console.",
-            })
-            .setFooter({
-              text: "Error",
-              iconURL: client.user?.displayAvatarURL(),
-            });
+          embed.setDescription("An internal error occurred!").addFields({
+            name: "Message",
+            value: "Command execution failed! Error will be logged to console.",
+          });
         }
+        embed.setFooter({
+          text: "If this error persists, please contact the developer.",
+          iconURL: client.user?.displayAvatarURL(),
+        });
 
         if (interaction.deferred || interaction.replied) {
           await interaction.editReply({ embeds: [embed] });
