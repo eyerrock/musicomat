@@ -11,10 +11,10 @@ export default {
     .setDMPermission(false),
   aliases: ["dc", "disconnect"],
   execute: async (interaction, guild, client) => {
-    await interaction.deferReply();
-
     const queue = await QueueController.getQueueByGuild(client, interaction);
     if (!queue) return;
+
+    await interaction.deferReply();
 
     queue.destroy(false);
     queue.connection.disconnect();

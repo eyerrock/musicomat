@@ -11,10 +11,10 @@ export default {
     .setDMPermission(false),
   aliases: ["np"],
   execute: async (interaction, guild, client) => {
-    await interaction.deferReply();
-
     const queue = await QueueController.getQueueByGuild(client, interaction);
     if (!queue) return;
+
+    await interaction.deferReply();
 
     const progress = queue.createProgressBar({ timecodes: true, queue: true });
     const percentage = queue.getPlayerTimestamp().progress;

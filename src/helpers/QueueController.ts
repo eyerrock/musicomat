@@ -42,7 +42,7 @@ export abstract class QueueController {
         .setDescription("Could not find a Queue!")
         .setMemberFooter(interaction.member);
 
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 

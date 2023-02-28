@@ -8,13 +8,13 @@ export default {
   data: new SlashCommandBuilder()
     .setName("play")
     .setDescription("Play a song!")
-    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("query")
         .setDescription("Query to search for.")
         .setRequired(true)
-    ),
+    )
+    .setDMPermission(false),
   aliases: ["p"],
   execute: async (interaction, guild, client) => {
     if (!interaction.member.voice.channel) {

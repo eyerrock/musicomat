@@ -9,8 +9,6 @@ export default {
     .setDescription("Shows a list of all commands.")
     .setDMPermission(false),
   execute: async (interaction, guild, client) => {
-    await interaction.deferReply();
-
     const fields = client.slashCommands.map((command) => {
       const options = command.data.toJSON().options ?? [{ name: "" }];
       const optionsString = options.map((o) => `\`<${o.name}>\``).join(" ");
@@ -34,6 +32,6 @@ export default {
       .setFields(fields)
       .setMemberFooter(interaction.member);
 
-    await interaction.followUp({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], ephemeral: true });
   },
 } as Command;

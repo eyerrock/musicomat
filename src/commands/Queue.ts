@@ -10,20 +10,20 @@ export default {
   data: new SlashCommandBuilder()
     .setName("queue")
     .setDescription("Shows the current Queue.")
-    .setDMPermission(false)
     .addIntegerOption((option) =>
       option
         .setName("page")
         .setDescription("Page to show")
         .setMinValue(1)
         .setRequired(false)
-    ),
+    )
+    .setDMPermission(false),
   aliases: ["q"],
   execute: async (interaction, guild, client) => {
-    await interaction.deferReply();
-
     const queue = await QueueController.getQueueByGuild(client, interaction);
     if (!queue) return;
+
+    await interaction.deferReply();
 
     const page = interaction.options.getInteger("page") ?? 1;
     const pageStart = (page - 1) * 10;

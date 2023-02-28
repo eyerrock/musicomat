@@ -11,10 +11,10 @@ export default {
     .setDMPermission(false),
   aliases: ["fs", "next"],
   execute: async (interaction, guild, client) => {
-    await interaction.deferReply();
-
     const queue = await QueueController.getQueueByGuild(client, interaction);
     if (!queue) return;
+
+    await interaction.deferReply();
 
     const currentTrack = queue.current;
     const success = queue.skip();
