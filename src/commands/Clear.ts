@@ -9,6 +9,7 @@ export default {
     .setName("clear")
     .setDescription("Clears the Queue.")
     .setDMPermission(false),
+  aliases: [],
   execute: async (interaction, guild, client) => {
     const queue = await QueueController.getQueueByGuild(client, interaction);
     if (!queue) return;

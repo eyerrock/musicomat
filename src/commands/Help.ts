@@ -8,6 +8,7 @@ export default {
     .setName("help")
     .setDescription("Shows a list of all commands.")
     .setDMPermission(false),
+  aliases: [],
   execute: async (interaction, guild, client) => {
     const fields = client.slashCommands.map((command) => {
       const options = command.data.toJSON().options ?? [{ name: "" }];

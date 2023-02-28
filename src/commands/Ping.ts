@@ -8,6 +8,7 @@ export default {
     .setName("ping")
     .setDescription("Pong!")
     .setDMPermission(false),
+  aliases: [],
   execute: async (interaction) => {
     await interaction.deferReply();
 
