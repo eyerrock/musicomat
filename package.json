@@ -1,7 +1,19 @@
 {
-  "name": "music-bot-ts",
+  "name": "musicomat",
   "version": "1.0.0",
   "description": "Discord Music Bot",
+  "license": "GPL-3.0",
+  "author": {
+    "name": "eyerrock",
+    "url": "https://github.com/eyerrock"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eyerrock/musicomat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eyerrock/musicomat/issues"
+  },
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -18,8 +30,6 @@
     "update:check": "ncu --reject \"@discordjs/opus discord-player\"",
     "update:packages": "ncu --reject \"@discordjs/opus discord-player\" -u"
   },
-  "author": "eyerrock",
-  "license": "ISC",
   "lint-staged": {
     "*.{js,ts}": [
       "eslint --fix",
