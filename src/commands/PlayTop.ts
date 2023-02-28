@@ -7,7 +7,7 @@ import { Command } from "../types/Command.js";
 export default {
   data: new SlashCommandBuilder()
     .setName("playtop")
-    .setDescription("Play a song at the top of the queue!")
+    .setDescription("Play a song at the top of the Queue!")
     .setDMPermission(false)
     .addStringOption((option) =>
       option

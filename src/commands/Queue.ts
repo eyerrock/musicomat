@@ -9,7 +9,7 @@ import { msToHHMMSS } from "../utils/msToHHMMSS.js";
 export default {
   data: new SlashCommandBuilder()
     .setName("queue")
-    .setDescription("Shows the current queue.")
+    .setDescription("Shows the current Queue.")
     .setDMPermission(false)
     .addIntegerOption((option) =>
       option
@@ -39,7 +39,7 @@ export default {
     let queueText = "";
     let thumbnail = null;
     if (tracks.length === 0) {
-      queueText = "No songs in queue!";
+      queueText = "No songs in Queue!";
     } else {
       queueText = `${tracks.join("\n")}${
         queue.tracks.length > pageEnd

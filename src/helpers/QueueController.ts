@@ -39,7 +39,7 @@ export abstract class QueueController {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
         .setTitle("❌ ┃ **Queue not found**")
-        .setDescription("Could not find a queue!")
+        .setDescription("Could not find a Queue!")
         .setMemberFooter(interaction.member);
 
       await interaction.followUp({ embeds: [embed], ephemeral: true });
