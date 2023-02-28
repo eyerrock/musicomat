@@ -11,17 +11,32 @@ export default {
   execute: async (interaction) => {
     await interaction.deferReply();
 
-    const latency = interaction.client.ws.ping;
+    let embed = new EmbedFactory()
+      .setColor(Colors.Orange)
+      .setTitle("⏳ ┃ **Pinging ...**")
+      .setDescription("Please wait a moment ...")
+      .setMemberFooter(interaction.member);
 
-    console.log(interaction.commandName);
+    const sent = await interaction.followUp({
+      embeds: [embed],
+      fetchReply: true,
+    });
 
-    const embed = new EmbedFactory()
+    const ping = interaction.client.ws.ping;
+
+    embed = new EmbedFactory()
       .setColor(Colors.Orange)
       .setTitle("🏓 ┃ **Pong!**")
       .setDescription(`Greetings, ${interaction.member}!`)
-      .addFields({ name: "Latency", value: `${latency} ms` })
+      .addFields(
+        { name: "WebSocket Heartbeat", value: `${ping} ms` },
+        {
+          name: "API Roundtrip Latency",
+          value: `${sent.createdTimestamp - interaction.createdTimestamp} ms`,
+        }
+      )
       .setMemberFooter(interaction.member);
 
-    await interaction.followUp({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   },
 } as Command;
