@@ -60,10 +60,15 @@ export default {
           iconURL: client.user?.displayAvatarURL(),
         });
 
-        if (interaction.deferred || interaction.replied) {
-          await interaction.editReply({ embeds: [embed] });
-        } else {
-          await interaction.reply({ embeds: [embed] });
+        try {
+          if (interaction.deferred || interaction.replied) {
+            await interaction.editReply({ embeds: [embed] });
+          } else {
+            await interaction.reply({ embeds: [embed] });
+          }
+        } catch (err) {
+          console.error(err);
+          console.error("Maybe the interaction was fired at startup?");
         }
       }
     }
