@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Events } from "discord.js";
+import { ActivityType, Events } from "discord.js";
 
 import { Client } from "../../types/Client.js";
 import { ClientEvent } from "../../types/Event.js";
@@ -17,5 +17,7 @@ export default {
     console.log(
       `\n${chalk.green("✔")} Logged into: ${chalk.cyan(client.user.tag)}\n`
     );
+
+    client.user.setActivity("/help", { type: ActivityType.Listening });
   },
 } as ClientEvent;
