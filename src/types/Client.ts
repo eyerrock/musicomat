@@ -33,9 +33,12 @@ export class Client extends ClientJS {
   private initializeConfig = (): ClientConfiguration => {
     const spinner = ora("Loading configuration ...").start();
 
-    const missingEnvVars = ["CLIENT_TOKEN", "CLIENT_ID", "MONGO_URI"].filter(
-      (envVar) => !process.env[envVar]
-    );
+    const missingEnvVars = [
+      "CLIENT_TOKEN",
+      "CLIENT_ID",
+      "MONGO_URI",
+      "W2G_API_KEY",
+    ].filter((envVar) => !process.env[envVar]);
 
     if (missingEnvVars.length > 0) {
       spinner.fail(
@@ -52,6 +55,7 @@ export class Client extends ClientJS {
       token: String(process.env.CLIENT_TOKEN),
       id: String(process.env.CLIENT_ID),
       mongoURI: String(process.env.MONGO_URI),
+      w2gApiKey: String(process.env.WATCH2GETHER_API_KEY),
     };
   };
 
@@ -91,4 +95,5 @@ type ClientConfiguration = {
   token: string;
   id: string;
   mongoURI: string;
+  w2gApiKey: string;
 };

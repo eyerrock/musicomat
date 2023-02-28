@@ -17,7 +17,7 @@ export default {
     )
     .setDMPermission(false),
   aliases: ["w2g", "w"],
-  execute: async (interaction) => {
+  execute: async (interaction, guild, client) => {
     const url = interaction.options.getString("url") ?? "";
     if (!validateURL(url)) {
       const embed = new EmbedFactory()
@@ -44,7 +44,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          w2g_api_key: process.env.W2G_API_KEY,
+          w2g_api_key: client.config.w2gApiKey,
           share: url,
           bg_color: "#2F2F2F",
           bg_opacity: "100",
