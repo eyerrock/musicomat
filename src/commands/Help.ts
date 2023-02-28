@@ -14,10 +14,10 @@ export default {
     const fields = client.slashCommands.map((command) => {
       const options = command.data.toJSON().options ?? [{ name: "" }];
       const optionsString = options.map((o) => `\`<${o.name}>\``).join(" ");
-      const aliases = command.aliases?.map((a) => `\`${a}\``).join(" ");
+      const aliases = command.aliases?.map((a) => `\`/${a}\``).join(" ");
       return {
         name: `\`/${command.data.name}\` ${optionsString}`,
-        value: `Description: ${command.data.description}\n${
+        value: `**${command.data.description}**\n${
           aliases ? `Aliases: ${aliases}` : ""
         }`,
       };
