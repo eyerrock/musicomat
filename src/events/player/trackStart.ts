@@ -26,7 +26,7 @@ export default {
     ];
     if (queue.repeatMode !== QueueRepeatMode.OFF) {
       fields.push({
-        name: "Repeat Mode",
+        name: "Loop Mode",
         value: QueueRepeatMode[queue.repeatMode],
       });
     }
