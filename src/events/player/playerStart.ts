@@ -1,4 +1,4 @@
-import { Queue, QueueRepeatMode, Track } from "discord-player";
+import { GuildQueue, QueueRepeatMode, Track } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
@@ -6,9 +6,9 @@ import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
 
 export default {
-  name: "trackStart",
+  name: "playerStart",
   once: false,
-  execute: async (player, queue: Queue, track: Track) => {
+  execute: async (player, queue: GuildQueue, track: Track) => {
     if (!MetadataGuard.guardMetadata(queue))
       return console.log("Queue has no valid metadata!");
 
@@ -19,8 +19,8 @@ export default {
       {
         name: "Next Up",
         value:
-          queue.tracks.length > 0
-            ? `[${queue.tracks[0].title}](${queue.tracks[0].url})`
+          queue.tracks.size > 0
+            ? `[${queue.tracks.at(0)?.title}](${queue.tracks.at(0)?.url})`
             : "-",
       },
     ];

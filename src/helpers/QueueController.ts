@@ -1,8 +1,9 @@
 import {
-  PlayerSearchResult,
+  GuildQueue,
+  Player,
   Playlist,
   QueryType,
-  Queue,
+  SearchResult,
   Track,
 } from "discord-player";
 import {
@@ -26,14 +27,15 @@ export type Metadata = {
   guild: Guild;
   guildData: IGuild;
   member: GuildMember | (APIInteractionGuildMember & GuildMember);
+  destroyed: boolean;
 };
 
 export abstract class QueueController {
-  public static getQueueByGuild = async (
+  public static getQueue = async (
     client: Client,
     interaction: GuardedChatInputCommandInteraction
   ) => {
-    const queue = client.player.getQueue(interaction.guild);
+    const queue = Player.singleton(client).nodes.get(interaction.guild);
 
     if (!queue) {
       const embed = new EmbedFactory()
@@ -53,7 +55,7 @@ export abstract class QueueController {
     interaction: GuardedChatInputCommandInteraction,
     client: Client,
     query: string | null
-  ): Promise<PlayerSearchResult | void> => {
+  ): Promise<SearchResult | void> => {
     if (!query) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
@@ -75,7 +77,7 @@ export abstract class QueueController {
 
     await interaction.followUp({ embeds: [embed] });
 
-    const searchResult = await client.player.search(query, {
+    const searchResult = await Player.singleton(client).search(query, {
       requestedBy: interaction.member,
       searchEngine: validateURL(query)
         ? QueryType.AUTO
@@ -107,13 +109,7 @@ export abstract class QueueController {
         "You have to be in a voice channel to use this command!"
       );
 
-    const queue = client.player.createQueue(interaction.guild, {
-      ytdlOptions: {
-        filter: "audioonly",
-        quality: "highestaudio",
-        highWaterMark: 1 << 25,
-        dlChunkSize: 0,
-      },
+    const queue = Player.singleton(client).nodes.create(interaction.guild, {
       leaveOnStop: false,
       leaveOnEmpty: true,
       leaveOnEmptyCooldown: guild.onEmptyDelay * 1000,
@@ -123,6 +119,7 @@ export abstract class QueueController {
         guild: interaction.guild,
         guildData: guild,
         member: interaction.member,
+        destroyed: false,
       },
       bufferingTimeout: 1000,
     });
@@ -131,7 +128,7 @@ export abstract class QueueController {
       if (!queue.connection)
         await queue.connect(interaction.member.voice.channel);
     } catch (err) {
-      client.player.deleteQueue(interaction.guild);
+      Player.singleton(client).nodes.delete(interaction.guild);
       throw new CommandError("Could not join your voice channel!");
     }
 
@@ -139,8 +136,8 @@ export abstract class QueueController {
   };
 
   static addToQueue = async (
-    queue: Queue,
-    searchResult: PlayerSearchResult,
+    queue: GuildQueue,
+    searchResult: SearchResult,
     playOnTop: boolean,
     interaction: GuardedChatInputCommandInteraction,
     guild: IGuild
@@ -150,10 +147,10 @@ export abstract class QueueController {
     if (searchResult.playlist) {
       if (playOnTop) {
         searchResult.tracks.reverse().forEach((track) => {
-          queue.insert(track, 0);
+          queue.insertTrack(track, 0);
         });
       } else {
-        queue.addTracks(searchResult.tracks);
+        queue.addTrack(searchResult.tracks);
       }
       toPlay = searchResult.playlist;
       toPlay.thumbnail = searchResult.playlist.thumbnail;
@@ -162,7 +159,7 @@ export abstract class QueueController {
       }
     } else {
       if (playOnTop) {
-        queue.insert(searchResult.tracks[0], 0);
+        queue.insertTrack(searchResult.tracks[0], 0);
       } else {
         queue.addTrack(searchResult.tracks[0]);
       }
@@ -198,8 +195,8 @@ export abstract class QueueController {
       )
       .setMemberFooter(interaction.member);
 
-    if (!queue.playing) await queue.play();
-    queue.setVolume(guild.volume);
+    if (!queue.isPlaying()) await queue.node.play();
+    queue.node.setVolume(guild.volume);
 
     await interaction.editReply({ embeds: [embed] });
   };

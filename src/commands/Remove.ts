@@ -18,10 +18,10 @@ export default {
     .setDMPermission(false),
   aliases: ["rm"],
   execute: async (interaction, guild, client) => {
-    const queue = await QueueController.getQueueByGuild(client, interaction);
+    const queue = await QueueController.getQueue(client, interaction);
     if (!queue) return;
 
-    if (queue.tracks.length === 0) {
+    if (queue.tracks.size === 0) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
         .setTitle("❌ ┃ **Empty Queue**")
@@ -33,7 +33,7 @@ export default {
     }
 
     const index = (interaction.options.getInteger("position") ?? 0) - 1;
-    if (index < 0 || index >= queue.tracks.length) {
+    if (index < 0 || index >= queue.tracks.size) {
       const embed = new EmbedFactory()
         .setColor(Colors.Red)
         .setTitle("❌ ┃ **Invalid Position**")
@@ -48,7 +48,7 @@ export default {
           },
           {
             name: "max. Position",
-            value: queue.tracks.length.toString(),
+            value: queue.tracks.size.toString(),
             inline: true,
           }
         )
@@ -60,7 +60,17 @@ export default {
 
     await interaction.deferReply();
 
-    const removed = queue.remove(index);
+    const removed = queue.node.remove(index);
+    if (!removed) {
+      const embed = new EmbedFactory()
+        .setColor(Colors.Red)
+        .setTitle("❌ ┃ **Error**")
+        .setDescription("An error occurred while removing the song!")
+        .setMemberFooter(interaction.member);
+
+      await interaction.followUp({ embeds: [embed] });
+      return;
+    }
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)

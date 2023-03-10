@@ -20,7 +20,7 @@ export default {
     .setDMPermission(false),
   aliases: ["q"],
   execute: async (interaction, guild, client) => {
-    const queue = await QueueController.getQueueByGuild(client, interaction);
+    const queue = await QueueController.getQueue(client, interaction);
     if (!queue) return;
 
     await interaction.deferReply();
@@ -28,12 +28,15 @@ export default {
     const page = interaction.options.getInteger("page") ?? 1;
     const pageStart = (page - 1) * 10;
     const pageEnd = pageStart + 10;
-    const tracks = queue.tracks.slice(pageStart, pageEnd).map((t, i) => {
-      return `${i + pageStart + 1}. [**${t.title}**](${t.url})`;
-    });
+    const tracks = queue.tracks
+      .toArray()
+      .slice(pageStart, pageEnd)
+      .map((t, i) => {
+        return `${i + pageStart + 1}. [**${t.title}**](${t.url})`;
+      });
 
     let duration = 0;
-    queue.tracks.forEach((t) => (duration += t.durationMS));
+    queue.tracks.map((t) => (duration += t.durationMS));
     const durationString = msToHHMMSS(duration);
 
     let queueText = "";
@@ -42,14 +45,15 @@ export default {
       queueText = "No songs in Queue!";
     } else {
       queueText = `${tracks.join("\n")}${
-        queue.tracks.length > pageEnd
-          ? `\n... ${queue.tracks.length - pageEnd} more songs`
+        queue.tracks.size > pageEnd
+          ? `\n... ${queue.tracks.size - pageEnd} more songs`
           : ""
       }`;
-      thumbnail = queue.tracks[0].thumbnail;
+      thumbnail = queue.tracks.at(0)?.thumbnail;
     }
+    if (thumbnail === undefined) thumbnail = null;
 
-    let maxPages = Math.ceil(queue.tracks.length / 5);
+    let maxPages = Math.ceil(queue.tracks.size / 5);
     if (maxPages === 0) maxPages = 1;
 
     const pageText = `Page ${
@@ -61,8 +65,8 @@ export default {
       { name: "Duration", value: durationString },
       {
         name: "Now Playing",
-        value: queue.current
-          ? `[**${queue.current.title}**](${queue.current.url})`
+        value: queue.currentTrack
+          ? `[**${queue.currentTrack.title}**](${queue.currentTrack.url})`
           : "Nothing playing",
       },
     ];

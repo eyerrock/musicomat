@@ -11,14 +11,14 @@ export default {
     .setDMPermission(false),
   aliases: [],
   execute: async (interaction, guild, client) => {
-    const queue = await QueueController.getQueueByGuild(client, interaction);
+    const queue = await QueueController.getQueue(client, interaction);
     if (!queue) return;
 
     await interaction.deferReply();
 
-    const oldLength = queue.tracks.length;
+    const oldLength = queue.tracks.size;
 
-    queue.clear();
+    queue.tracks.clear();
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)

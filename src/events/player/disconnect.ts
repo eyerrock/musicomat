@@ -1,4 +1,4 @@
-import { Player, Queue } from "discord-player";
+import { GuildQueue, Player } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
@@ -6,9 +6,9 @@ import { EmbedFactory } from "../../helpers/EmbedFactory.js";
 import { PlayerEvent } from "../../types/Event.js";
 
 export default {
-  name: "botDisconnect",
+  name: "disconnect",
   once: false,
-  execute: async (player: Player, queue: Queue) => {
+  execute: async (player: Player, queue: GuildQueue) => {
     if (!MetadataGuard.guardMetadata(queue))
       return console.log("Queue has no valid metadata!");
 

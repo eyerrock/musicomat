@@ -1,3 +1,4 @@
+import { Player } from "discord-player";
 import { readdirSync } from "fs";
 import ora from "ora";
 import { dirname, join } from "path";
@@ -30,16 +31,18 @@ const register = async (client: Client, dir: string) => {
         filePath
       );
       if (event.once) {
-        client.player.once(
+        Player.singleton(client).events.once(
           event.name,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          async (...args: any) => await event.execute(client.player, ...args)
+          async (...args: any) =>
+            await event.execute(Player.singleton(client), ...args)
         );
       } else {
-        client.player.on(
+        Player.singleton(client).events.on(
           event.name,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          async (...args: any) => await event.execute(client.player, ...args)
+          async (...args: any) =>
+            await event.execute(Player.singleton(client), ...args)
         );
       }
     }

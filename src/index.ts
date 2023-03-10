@@ -1,5 +1,6 @@
 import "dotenv/config.js";
 
+import { Player } from "discord-player";
 import { GatewayIntentBits } from "discord.js";
 
 import { registerEvents } from "./events/registerEvents.js";
@@ -16,6 +17,8 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
+
+Player.singleton(client);
 
 registerSignals(client);
 

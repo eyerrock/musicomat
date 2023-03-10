@@ -11,13 +11,23 @@ export default {
     .setDMPermission(false),
   aliases: ["fs", "next"],
   execute: async (interaction, guild, client) => {
-    const queue = await QueueController.getQueueByGuild(client, interaction);
+    const queue = await QueueController.getQueue(client, interaction);
     if (!queue) return;
+
+    const currentTrack = queue.currentTrack;
+    if (!currentTrack) {
+      const embed = new EmbedFactory()
+        .setColor(Colors.Red)
+        .setTitle("❌ ┃ **Error**")
+        .setDescription("There is no song to skip!")
+        .setMemberFooter(interaction.member);
+
+      return interaction.reply({ embeds: [embed], ephemeral: true });
+    }
 
     await interaction.deferReply();
 
-    const currentTrack = queue.current;
-    const success = queue.skip();
+    const success = queue.node.skip();
 
     const embed = new EmbedFactory()
       .setColor(success ? Colors.LuminousVividPink : Colors.Red)

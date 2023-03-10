@@ -24,26 +24,13 @@ export default {
     .setDMPermission(false),
   aliases: ["repeat"],
   execute: async (interaction, guild, client) => {
-    const queue = await QueueController.getQueueByGuild(client, interaction);
+    const queue = await QueueController.getQueue(client, interaction);
     if (!queue) return;
 
     await interaction.deferReply();
 
-    const oldMode = queue.repeatMode;
-
     const mode = interaction.options.getInteger("mode") ?? 0;
-    const success = queue.setRepeatMode(mode);
-
-    if (oldMode !== mode && !success) {
-      const embed = new EmbedFactory()
-        .setColor(Colors.Red)
-        .setTitle("❌ ┃ **Error**")
-        .setDescription("Failed to change the Loop Mode!")
-        .setMemberFooter(interaction.member);
-
-      await interaction.followUp({ embeds: [embed] });
-      return;
-    }
+    queue.setRepeatMode(mode);
 
     const embed = new EmbedFactory()
       .setColor(Colors.LuminousVividPink)

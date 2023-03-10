@@ -1,4 +1,4 @@
-import { Queue } from "discord-player";
+import { GuildQueue } from "discord-player";
 import { Colors } from "discord.js";
 
 import { MetadataGuard } from "../../guards/MetadataGuard.js";
@@ -8,7 +8,7 @@ import { PlayerEvent } from "../../types/Event.js";
 export default {
   name: "error",
   once: false,
-  execute: async (player, queue: Queue, error: Error) => {
+  execute: async (player, queue: GuildQueue, error: Error) => {
     if (!MetadataGuard.guardMetadata(queue))
       return console.log("Queue has no valid metadata!");
 
