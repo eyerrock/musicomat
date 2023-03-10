@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { Player } from "discord-player";
 import {
   Client as ClientJS,
   ClientOptions,
@@ -13,7 +12,6 @@ import { Command } from "./Command";
 
 export class Client extends ClientJS {
   public config: ClientConfiguration;
-  public player: Player;
   public slashCommands: Collection<string, Command>;
   public slashCommandsData: Collection<
     string,
@@ -24,7 +22,6 @@ export class Client extends ClientJS {
   constructor(options: ClientOptions) {
     super(options);
     this.config = this.initializeConfig();
-    this.player = new Player(this);
     this.slashCommands = new Collection();
     this.slashCommandsData = new Collection();
     this.db = mongoose;
@@ -37,7 +34,7 @@ export class Client extends ClientJS {
       "CLIENT_TOKEN",
       "CLIENT_ID",
       "MONGO_URI",
-      "W2G_API_KEY",
+      "WATCH2GETHER_API_KEY",
     ].filter((envVar) => !process.env[envVar]);
 
     if (missingEnvVars.length > 0) {
